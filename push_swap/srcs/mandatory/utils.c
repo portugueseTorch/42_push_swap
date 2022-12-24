@@ -1,13 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/20 17:01:20 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/20 17:01:55 by gda-cruz         ###   ########.fr       */
+/*   Created: 2022/12/23 19:30:53 by gda-cruz          #+#    #+#             */
+/*   Updated: 2022/12/23 19:31:09 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	valid_input(int argc, char **argv)
+#include "push_swap.h"
+
+void	release_split(char **stash)
+{
+	int	i;
+
+	i = 0;
+	while (stash[i])
+		free(stash[i++]);
+	free(stash);
+}

@@ -6,32 +6,32 @@
 #    By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/10 15:47:55 by gda-cruz          #+#    #+#              #
-#    Updated: 2022/12/20 17:13:52 by gda-cruz         ###   ########.fr        #
+#    Updated: 2022/12/24 01:37:46 by gda-cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Colors #
 GREEN		=	\033[1;32m
 LIGHT_GREEN	=	\033[0;32m
 RED			=	\033[0;31m
 YELLOW		=	\033[0;33m
 RESET		=	\033[0m
 
-NAME = pipex
+NAME 		=	push_swap
 
 LIBFT_DIR	=	libft
 
-SRC		=	srcs/mandatory/main.c \
-			srcs/mandatory/setup.c \
-			srcs/mandatory/command_setup.c \
-			srcs/mandatory/free.c \
-			srcs/mandatory/utils.c
+SRC			=	srcs/mandatory/main.c \
+				srcs/mandatory/input.c \
+				srcs/mandatory/rules.c \
+				srcs/mandatory/utils.c \
+				srcs/mandatory/stack_utils.c \
+				# srcs/mandatory/err_handling
 
-B_SRC		=	srcs/bonus/main_bonus.c \
-			srcs/bonus/setup_bonus.c \
-			srcs/bonus/command_setup_bonus.c \
-			srcs/bonus/free_bonus.c \
-			srcs/bonus/utils_bonus.c
+# B_SRC		=	srcs/bonus/ \
+# 			srcs/bonus/ \
+# 			srcs/bonus/ \
+# 			srcs/bonus/ \
+# 			srcs/bonus/
 
 OBJ			=	$(SRC:srcs/mandatory/%.c=$(OBJ_DIR)/%.o)
 B_OBJ		=	$(B_SRC:srcs/bonus/%.c=$(B_OBJ_DIR)/%.o)
@@ -44,7 +44,7 @@ BIN			=	$(BIN_DIR)/$(NAME)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -I$(INC_DIR) -I$(LIBFT_DIR)
+CFLAGS = -Wall -Wextra -Werror  -I$(INC_DIR) -Ilibft/inc # -fsanitize=address
 
 all: $(NAME)
 
@@ -52,18 +52,11 @@ $(NAME): $(BIN)
 
 $(BIN):	$(OBJ) | $(BIN_DIR)
 	@echo ""
-	@echo "$(YELLOW)  Preparing Pipex...$(RESET)"
+	@echo "$(YELLOW)  Preparing push_swap...$(RESET)"
 	@make -s -C $(LIBFT_DIR)
 	@echo "$(LIGHT_GREEN)  Libft successfully compiled.$(RESET)"
 	@$(CC) $(CFLAGS) -o $(@) $(^) -L$(LIBFT_DIR) -lft
-	@echo "$(LIGHT_GREEN)  Pipex successfully compiled.$(RESET)"
-	@echo "$(GREEN) $(RESET)"
-	@echo "$(GREEN) _______   _____   _______    _______   ___   ___  $(RESET)"
-	@echo "$(GREEN) |||||||\ |||||||  |||||||\  ||||||||| ||||| ||||| $(RESET)"
-	@echo "$(GREEN)  |||__)|   |||     |||__)|   |||_ \||   \\\\\   //   $(RESET)"
-	@echo "$(GREEN)  ||||||/   |||     ||||||/   ||||| _     >> <<     $(RESET)"
-	@echo "$(GREEN) _|||_     _|||_   _|||_     _|||__/||  _//_ _\\\\\_  $(RESET)"
-	@echo "$(GREEN) ||||||   |||||||  ||||||    ||||||||| ||||| ||||| $(RESET)"
+	@echo "$(LIGHT_GREEN)  push_swap successfully compiled.$(RESET)"
 	@echo "$(GREEN)\n$(RESET)"
 
 $(OBJ_DIR)/%.o:	srcs/mandatory/%.c | $(BUILD_DIR)
@@ -78,11 +71,11 @@ $(BUILD_DIR):
 
 bonus: $(B_OBJ) | $(BIN_DIR)
 	@echo ""
-	@echo "$(YELLOW)  Preparing Pipex...$(RESET)"
+	@echo "$(YELLOW)  Preparing push_swap...$(RESET)"
 	@make -s -C $(LIBFT_DIR)
 	@echo "$(LIGHT_GREEN)  Libft successfully compiled.$(RESET)"
 	@$(CC) $(CFLAGS) -o $(NAME) $(^) -L$(LIBFT_DIR) -lft
-	@echo "$(LIGHT_GREEN)  Pipex successfully compiled.\n$(RESET)"
+	@echo "$(LIGHT_GREEN)  push_swap successfully compiled.\n$(RESET)"
 	@mv pipex build/bin
 
 $(B_OBJ_DIR)/%.o:	srcs/bonus/%.c | $(BUILD_DIR)
@@ -96,23 +89,8 @@ clean:
 fclean: clean
 	@make fclean -s -C $(LIBFT_DIR)
 	@rm -rf build
-	@echo "$(RED)All Pipex files removed.$(RESET)"
+	@echo "$(RED)  All push_swap files removed.$(RESET)"
 
 re: fclean all
-
-mandatory_path: all
-	@./build/bin/pipex input.txt "/bin/grep give" "wc -l" output.txt
-
-mandatory_normal: all
-	@./build/bin/pipex input.txt "grep give" "wc -l" output.txt
-
-bonus_mc1: bonus
-	@./build/bin/pipex input.txt "grep give" "grep you" "wc -l" output.txt
-
-bonus_mc2: bonus
-	@./build/bin/pipex input.txt "ls -l" "grep .pdf" "grep pipex" "wc -l" output.txt
-
-bonus_hd: bonus
-	@./build/bin/pipex here_doc EOF "grep azul" "grep bicicleta" "wc -l" output.txt
 
 .PHONY: all clean fclean re bonus
