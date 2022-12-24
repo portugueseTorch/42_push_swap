@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 19:23:46 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 12:11:07 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2022/12/24 17:19:30 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 int	valid_input(int argc, char **argv)
 {
 	char	**arr;
-	int	valid;
+	int		valid;
+
+	arr = NULL;
 	if (argc == 2)
 	{
 		if (!argv[1][0])
 			return (0);
 		arr = ft_split(argv[1], ' ');
-		valid = validate(arr, 0);	// In this case, ints were passed as ./push_swap "4 23 68 0 -1"
+		valid = validate(arr, 0);
 	}
 	else
-		valid = validate(argv, 1);	// In this case, ints were passed as ./push_swap 4 23 68 0 -1
+		valid = validate(argv, 1);
 	if (!valid && arr)
 		release_split(arr);
 	return (valid);
 }
 
-/*	Three tests need to be done: are they in the integer limit, are all args digits, and
-	are there any duplicates? Also, allow for + and - at start of args   */
 int	validate(char **arr, int flag)
 {
 	int		i;
@@ -45,15 +45,15 @@ int	validate(char **arr, int flag)
 			return (0);
 		j = flag;
 		k = 0;
-		if (arr[i][k] == '-' || arr[i][k] == '+')	// Ignore + and - at the start of numbers
+		if (arr[i][k] == '-' || arr[i][k] == '+')
 			k++;
-		if (ft_atoi(arr[i]) > INT_MAX || ft_atoi(arr[i]) < INT_MIN)	// Check for limits
+		if (ft_atoi(arr[i]) > INT_MAX || ft_atoi(arr[i]) < INT_MIN)
 			return (0);
-		while (arr[i][k])	// Check for non integers
+		while (arr[i][k])
 			if (!ft_isdigit(arr[i][k++]))
 				return (0);
 		while (j < i)
-			if (ft_atoi(arr[j++]) == ft_atoi(arr[i]))	// Check for duplicates
+			if (ft_atoi(arr[j++]) == ft_atoi(arr[i]))
 				return (0);
 	}
 	if (!flag)

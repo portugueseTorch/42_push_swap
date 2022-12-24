@@ -6,7 +6,7 @@
 #    By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/10 15:47:55 by gda-cruz          #+#    #+#              #
-#    Updated: 2022/12/24 11:54:46 by gda-cruz         ###   ########.fr        #
+#    Updated: 2022/12/24 15:53:17 by gda-cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ YELLOW		=	\033[0;33m
 RESET		=	\033[0m
 
 NAME 		=	push_swap
+B_NAME 		=	checker
 
 LIBFT_DIR	=	libft
 
@@ -26,13 +27,15 @@ SRC			=	srcs/mandatory/main.c \
 				srcs/mandatory/free.c \
 				srcs/mandatory/stack_utils.c \
 				srcs/mandatory/stack_utils2.c \
-				# srcs/mandatory/err_handling
 
-# B_SRC		=	srcs/bonus/ \
-# 			srcs/bonus/ \
-# 			srcs/bonus/ \
-# 			srcs/bonus/ \
-# 			srcs/bonus/
+B_SRC		=	srcs/bonus/main_bonus.c \
+				srcs/bonus/error_bonus.c \
+				srcs/bonus/operations_bonus.c \
+				srcs/mandatory/input.c \
+				srcs/mandatory/operations.c \
+				srcs/mandatory/free.c \
+				srcs/mandatory/stack_utils.c \
+				srcs/mandatory/stack_utils2.c \
 
 OBJ			=	$(SRC:srcs/mandatory/%.c=$(OBJ_DIR)/%.o)
 B_OBJ		=	$(B_SRC:srcs/bonus/%.c=$(B_OBJ_DIR)/%.o)
@@ -72,12 +75,12 @@ $(BUILD_DIR):
 
 bonus: $(B_OBJ) | $(BIN_DIR)
 	@echo ""
-	@echo "$(YELLOW)  Preparing push_swap...$(RESET)"
+	@echo "$(YELLOW)  Preparing checker...$(RESET)"
 	@make -s -C $(LIBFT_DIR)
 	@echo "$(LIGHT_GREEN)  Libft successfully compiled.$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(^) -L$(LIBFT_DIR) -lft
-	@echo "$(LIGHT_GREEN)  push_swap successfully compiled.\n$(RESET)"
-	@mv pipex build/bin
+	@$(CC) $(CFLAGS) -o $(B_NAME) $(^) -L$(LIBFT_DIR) -lft
+	@echo "$(LIGHT_GREEN)  checker successfully compiled.\n$(RESET)"
+	@mv $(B_NAME) build/bin
 
 $(B_OBJ_DIR)/%.o:	srcs/bonus/%.c | $(BUILD_DIR)
 	@$(CC) $(CFLAGS) -c $(^) -o $(@)

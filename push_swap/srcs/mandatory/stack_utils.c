@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 00:40:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 12:45:41 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2022/12/24 17:21:24 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	stack_length(t_s **s)
 t_s	*stack_last(t_s **s)
 {
 	t_s	*last;
-	
+
 	if (!*s)
 		return (NULL);
 	last = *s;
@@ -46,7 +46,7 @@ t_s	*stack_last(t_s **s)
 t_s	*stack_snd_last(t_s **s)
 {
 	t_s	*snd_last;
-	
+
 	if (!*s)
 		return (NULL);
 	snd_last = *s;

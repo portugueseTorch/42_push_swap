@@ -6,55 +6,48 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 17:02:56 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 12:46:38 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2022/12/24 17:20:31 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	display_stacks(t_s **a, t_s **b)
-{
-	t_s		*temp;
-	
-	temp = *a;
-	printf("A = [ ");
-	if (temp)
-	{
-		for(; temp; temp = temp->next)
-		{
-			printf("%d", temp->n);
-			if (temp->next)
-				printf(", ");
-		}
-	}
-	printf(" ]\n");
-	temp = *b;
-	printf("B = [ ");
-	if (temp)
-	{
-		for(; temp; temp = temp->next)
-		{
-			printf("%d", temp->n);
-			if (temp->next)
-				printf(", ");
-		}
-	}
-	printf(" ]\n\n");
-}
+// void	display_stacks(t_s **a, t_s **b)
+// {
+// 	t_s		*temp;
 
-/*	Two options: either argc == 2 and the numbers are passed as a string in argv[1]
-	or the numbers are passed independently as args, each number in argv[x].     */
+// 	temp = *a;
+// 	printf("A = [ ");
+// 	if (temp)
+// 	{
+// 		for(; temp; temp = temp->next)
+// 		{
+// 			printf("%d", temp->n);
+// 			if (temp->next)
+// 				printf(", ");
+// 		}
+// 	}
+// 	printf(" ]\n");
+// 	temp = *b;
+// 	printf("B = [ ");
+// 	if (temp)
+// 	{
+// 		for(; temp; temp = temp->next)
+// 		{
+// 			printf("%d", temp->n);
+// 			if (temp->next)
+// 				printf(", ");
+// 		}
+// 	}
+// 	printf(" ]\n\n");
+// }
+
 int	main(int argc, char **argv)
 {
 	t_s	*a;
 	t_s	*b;
-	
-	if (argc < 2)
-	{
-		ft_putstr_fd("Error: Too few arguments.\n", 2);
-		exit (1);
-	}
-	if (!valid_input(argc, argv))
+
+	if (argc < 2 || !valid_input(argc, argv))
 	{
 		ft_printf("Error\n");
 		exit (1);
@@ -64,6 +57,7 @@ int	main(int argc, char **argv)
 	else
 		a = create_stack(argv, 1);
 	b = NULL;
-	release_stack(&a);
+	(void) b;
+	(void) a;
 	return (0);
 }

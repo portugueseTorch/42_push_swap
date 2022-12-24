@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 11:01:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 12:43:04 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2022/12/24 17:21:01 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	swap_stack(t_s **s)
 {
 	t_s	*temp;
-	
+
 	if (stack_length(s) < 2 || !*s)
 		return ;
 	temp = *s;
@@ -27,7 +27,7 @@ void	swap_stack(t_s **s)
 void	push_stack(t_s **src, t_s **dst)
 {
 	t_s	*temp;
-	
+
 	if (!src)
 		return ;
 	temp = *src;
@@ -39,7 +39,7 @@ void	rotate(t_s **s)
 {
 	t_s	*temp;
 	t_s	*last;
-	
+
 	if (!*s)
 		return ;
 	if (stack_length(s) == 1)
@@ -60,7 +60,7 @@ void	reverse_rotate(t_s **s)
 {
 	t_s	*temp;
 	t_s	*snd_last;
-	
+
 	if (!*s)
 		return ;
 	if (stack_length(s) == 1)

@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:13:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 12:38:48 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:21:42 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,13 @@ void	swap_stack(t_s **s);
 void	push_stack(t_s **src, t_s **dst);
 void	rotate(t_s **s);
 void	reverse_rotate(t_s **s);
+
+/************** BONUS **************/
+void	redirect_rule(char *rule, t_s **a, t_s **b);
+void	execute_rules(t_s **a, t_s **b);
+void	swap_both(t_s **a, t_s **b);
+void	rotate_both(t_s **a, t_s **b);
+void	reverse_rotate_both(t_s **a, t_s **b);
+void	error_handler(char *rule, t_s **a, t_s **b);
 
 #endif

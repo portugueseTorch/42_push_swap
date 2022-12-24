@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 11:49:54 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 11:56:32 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2022/12/24 17:21:58 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	add_block_end(t_s **s, t_s *new)
 {
 	t_s	*end;
-	
+
 	if (!new)
 		return ;
 	if (!*s || !s)
@@ -30,7 +30,7 @@ void	add_block_end(t_s **s, t_s *new)
 void	add_block_start(t_s **s, t_s *new)
 {
 	t_s	*start;
-	
+
 	if (!new)
 		return ;
 	if (!*s || !s)
@@ -53,5 +53,5 @@ void	remove_block(t_s **s)
 		*s = NULL;
 		return ;
 	}
-	*s = (*s)->next;	
+	*s = (*s)->next;
 }
