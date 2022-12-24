@@ -6,40 +6,40 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 17:02:56 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 01:36:26 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2022/12/24 12:46:38 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	display_stack(t_s **s)
+void	display_stacks(t_s **a, t_s **b)
 {
-	t_s	*temp;
-
-	temp = *s;
-	if (!temp)
-		return ;
-	while (temp)
+	t_s		*temp;
+	
+	temp = *a;
+	printf("A = [ ");
+	if (temp)
 	{
-		ft_printf("%d\n", temp->n);
-		temp = temp->next;
+		for(; temp; temp = temp->next)
+		{
+			printf("%d", temp->n);
+			if (temp->next)
+				printf(", ");
+		}
 	}
-}
-
-void	release_stack(t_s **s)
-{
-	t_s	*temp;
-
-	temp = *s;
-	if (!temp)
-		return ;
-	while (*s)
+	printf(" ]\n");
+	temp = *b;
+	printf("B = [ ");
+	if (temp)
 	{
-		temp = *s;
-		*s = temp->next;
-		free(temp);
+		for(; temp; temp = temp->next)
+		{
+			printf("%d", temp->n);
+			if (temp->next)
+				printf(", ");
+		}
 	}
-	s = NULL;
+	printf(" ]\n\n");
 }
 
 /*	Two options: either argc == 2 and the numbers are passed as a string in argv[1]
@@ -63,9 +63,7 @@ int	main(int argc, char **argv)
 		a = create_stack(argv, 0);
 	else
 		a = create_stack(argv, 1);
-	display_stack(&a);
+	b = NULL;
 	release_stack(&a);
-	(void) b;
-	(void) a;
 	return (0);
 }

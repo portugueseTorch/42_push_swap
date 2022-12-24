@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 19:23:46 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 01:36:12 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2022/12/24 12:11:07 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 
 int	valid_input(int argc, char **argv)
 {
+	char	**arr;
+	int	valid;
 	if (argc == 2)
 	{
 		if (!argv[1][0])
 			return (0);
-		return (validate(ft_split(argv[1], ' '), 0));	// In this case, ints were passed as ./push_swap "4 23 68 0 -1"
+		arr = ft_split(argv[1], ' ');
+		valid = validate(arr, 0);	// In this case, ints were passed as ./push_swap "4 23 68 0 -1"
 	}
 	else
-		return (validate(argv, 1));	// In this case, ints were passed as ./push_swap 4 23 68 0 -1
+		valid = validate(argv, 1);	// In this case, ints were passed as ./push_swap 4 23 68 0 -1
+	if (!valid && arr)
+		release_split(arr);
+	return (valid);
 }
 
 /*	Three tests need to be done: are they in the integer limit, are all args digits, and
@@ -68,7 +74,7 @@ t_s	*create_stack(char **argv, int flag)
 	i = flag;
 	stack = new_stack(ft_atoi(arr[i]));
 	while (arr[++i])
-		add_block(&stack, new_stack(ft_atoi(arr[i])));
+		add_block_end(&stack, new_stack(ft_atoi(arr[i])));
 	if (!flag)
 		release_split(arr);
 	return (stack);

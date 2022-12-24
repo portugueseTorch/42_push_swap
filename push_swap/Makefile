@@ -6,7 +6,7 @@
 #    By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/10 15:47:55 by gda-cruz          #+#    #+#              #
-#    Updated: 2022/12/24 01:37:46 by gda-cruz         ###   ########.fr        #
+#    Updated: 2022/12/24 11:54:46 by gda-cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,10 @@ LIBFT_DIR	=	libft
 
 SRC			=	srcs/mandatory/main.c \
 				srcs/mandatory/input.c \
-				srcs/mandatory/rules.c \
-				srcs/mandatory/utils.c \
+				srcs/mandatory/operations.c \
+				srcs/mandatory/free.c \
 				srcs/mandatory/stack_utils.c \
+				srcs/mandatory/stack_utils2.c \
 				# srcs/mandatory/err_handling
 
 # B_SRC		=	srcs/bonus/ \
