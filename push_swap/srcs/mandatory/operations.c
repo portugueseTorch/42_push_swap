@@ -6,13 +6,13 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 11:01:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 17:21:01 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2022/12/29 17:40:07 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap_stack(t_s **s)
+void	swap_stack(t_s **s, char stack)
 {
 	t_s	*temp;
 
@@ -22,20 +22,26 @@ void	swap_stack(t_s **s)
 	*s = temp->next;
 	temp->next = temp->next->next;
 	(*s)->next = temp;
+	if (stack)
+		ft_printf("s%c\n", stack);
 }
 
-void	push_stack(t_s **src, t_s **dst)
+void	push_stack(t_s **src, t_s **dst, char stack)
 {
 	t_s	*temp;
 
 	if (!src)
 		return ;
 	temp = *src;
+	if (stack_length(src) == 0)
+		return ;
 	remove_block(src);
 	add_block_start(dst, temp);
+	if (stack)
+		ft_printf("p%c\n", stack);	
 }
 
-void	rotate(t_s **s)
+void	rotate(t_s **s, char stack)
 {
 	t_s	*temp;
 	t_s	*last;
@@ -45,7 +51,7 @@ void	rotate(t_s **s)
 	if (stack_length(s) == 1)
 		return ;
 	else if (stack_length(s) == 2)
-		swap_stack(s);
+		swap_stack(s, stack);
 	else
 	{
 		temp = *s;
@@ -54,9 +60,11 @@ void	rotate(t_s **s)
 		temp->next = NULL;
 		last->next = temp;
 	}
+	if (stack)
+		ft_printf("r%c\n", stack);
 }
 
-void	reverse_rotate(t_s **s)
+void	reverse_rotate(t_s **s, char stack)
 {
 	t_s	*temp;
 	t_s	*snd_last;
@@ -66,7 +74,7 @@ void	reverse_rotate(t_s **s)
 	if (stack_length(s) == 1)
 		return ;
 	else if (stack_length(s) == 2)
-		swap_stack(s);
+		swap_stack(s, stack);
 	else
 	{
 		temp = *s;
@@ -75,4 +83,6 @@ void	reverse_rotate(t_s **s)
 		(*s)->next = temp;
 		snd_last->next = NULL;
 	}
+	if (stack)
+		ft_printf("rr%c\n", stack);
 }

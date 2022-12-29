@@ -6,7 +6,7 @@
 #    By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/10 15:47:55 by gda-cruz          #+#    #+#              #
-#    Updated: 2022/12/24 15:53:17 by gda-cruz         ###   ########.fr        #
+#    Updated: 2022/12/29 16:35:47 by gda-cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ B_NAME 		=	checker
 LIBFT_DIR	=	libft
 
 SRC			=	srcs/mandatory/main.c \
+				srcs/mandatory/algo.c \
 				srcs/mandatory/input.c \
 				srcs/mandatory/operations.c \
 				srcs/mandatory/free.c \
