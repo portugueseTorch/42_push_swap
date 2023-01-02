@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 11:49:54 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 17:21:58 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:18:25 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,38 @@ void	remove_block(t_s **s)
 		return ;
 	}
 	*s = (*s)->next;
+}
+
+int	is_sorted(t_s **s)
+{
+	t_s	*temp;
+
+	temp = *s;
+	if (!temp)
+		return (-1);
+	while (temp->next)
+	{
+		if (temp->n > temp->next->n)
+			return (0);
+		temp = temp->next;
+	}
+	return (1);
+}
+
+int	is_max(long int n, t_s **s)
+{
+	t_s			*temp;
+	long int	max;
+
+	if (!*s || !s)
+		return (-1);
+	temp = *s;
+	max = temp->n;
+	while (temp)
+	{
+		if (temp->n > max)
+			return (0);
+		temp = temp->next;
+	}
+	return (1);
 }

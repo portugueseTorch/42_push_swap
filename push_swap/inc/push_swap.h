@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:13:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/29 17:31:33 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:19:31 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 typedef struct s_stack
 {
-	int				n;
+	long int		n;
 	struct s_stack	*next;
 }	t_s;
 
@@ -52,6 +52,8 @@ t_s		*stack_snd_last(t_s **s);
 void	add_block_end(t_s **s, t_s *new);
 void	add_block_start(t_s **s, t_s *new);
 void	remove_block(t_s **s);
+int		is_sorted(t_s **s);
+int		is_max(long int n, t_s **s);
 
 /*********** operations.c **********/
 void	swap_stack(t_s **s, char stack);
