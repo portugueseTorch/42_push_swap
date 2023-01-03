@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 17:02:56 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/29 17:43:21 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/01/03 00:57:46 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	display_stacks(t_s **a, t_s **b)
 	{
 		for(; temp; temp = temp->next)
 		{
-			printf("%d", temp->n);
+			printf("%ld", temp->n);
 			if (temp->next)
 				printf(", ");
 		}
@@ -34,7 +34,7 @@ void	display_stacks(t_s **a, t_s **b)
 	{
 		for(; temp; temp = temp->next)
 		{
-			printf("%d", temp->n);
+			printf("%ld", temp->n);
 			if (temp->next)
 				printf(", ");
 		}
@@ -57,6 +57,9 @@ int	main(int argc, char **argv)
 	else
 		a = create_stack(argv, 1);
 	b = NULL;
-	bubble_sort(&a, &b);
+	display_stacks(&a, &b);
+	sort_four_or_five(&a, &b, 'a', 'b');
+	printf("\n");
+	display_stacks(&a, &b);
 	return (0);
 }

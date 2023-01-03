@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 11:49:54 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/02 14:18:25 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/03 00:52:31 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,13 @@ int	is_sorted(t_s **s)
 int	is_max(long int n, t_s **s)
 {
 	t_s			*temp;
-	long int	max;
 
 	if (!*s || !s)
 		return (-1);
 	temp = *s;
-	max = temp->n;
 	while (temp)
 	{
-		if (temp->n > max)
+		if (temp->n > n)
 			return (0);
 		temp = temp->next;
 	}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/10 15:47:55 by gda-cruz          #+#    #+#              #
-#    Updated: 2022/12/29 16:35:47 by gda-cruz         ###   ########.fr        #
+#    Updated: 2023/01/03 00:34:09 by gda_cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC			=	srcs/mandatory/main.c \
 				srcs/mandatory/free.c \
 				srcs/mandatory/stack_utils.c \
 				srcs/mandatory/stack_utils2.c \
+				srcs/mandatory/stack_utils3.c \
 
 B_SRC		=	srcs/bonus/main_bonus.c \
 				srcs/bonus/error_bonus.c \

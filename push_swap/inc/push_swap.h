@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:13:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/02 14:19:31 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/03 00:51:22 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef struct s_stack
 void	display_stacks(t_s **a, t_s **b);
 
 /************** algo.c *************/
-void	bubble_sort(t_s **a, t_s **b);
+void	sort_three(t_s **s, char src);
+void	sort_four_or_five(t_s **s, t_s **d, char src, char dst);
 
 /************* input.c *************/
 int		valid_input(int argc, char **argv);
@@ -54,6 +55,9 @@ void	add_block_start(t_s **s, t_s *new);
 void	remove_block(t_s **s);
 int		is_sorted(t_s **s);
 int		is_max(long int n, t_s **s);
+
+/********** stack_utils3.c *********/
+int		index_of_min(t_s **s);
 
 /*********** operations.c **********/
 void	swap_stack(t_s **s, char stack);
