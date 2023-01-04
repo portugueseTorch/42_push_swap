@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 17:02:56 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/03 00:57:46 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:42:39 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	main(int argc, char **argv)
 	else
 		a = create_stack(argv, 1);
 	b = NULL;
-	display_stacks(&a, &b);
-	sort_four_or_five(&a, &b, 'a', 'b');
-	printf("\n");
-	display_stacks(&a, &b);
+	// display_stacks(&a, &b);
+	sort_five(&a, &b, 'a', 'b');
+	// printf("\n");
+	// display_stacks(&a, &b);
 	return (0);
 }

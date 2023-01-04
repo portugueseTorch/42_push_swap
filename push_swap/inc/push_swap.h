@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:13:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/03 00:51:22 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:29:10 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,13 @@ typedef struct s_stack
 /************** main.c *************/
 void	display_stacks(t_s **a, t_s **b);
 
-/************** algo.c *************/
+/************* engine.c ************/
 void	sort_three(t_s **s, char src);
-void	sort_four_or_five(t_s **s, t_s **d, char src, char dst);
+void	sort_five(t_s **s, t_s **d, char src, char dst);
+void	sort_stack(t_s **s, t_s **d, char src, char dst);
+
+/********** engine_utils.c *********/
+int		sub_sorted(t_s **s);
 
 /************* input.c *************/
 int		valid_input(int argc, char **argv);
