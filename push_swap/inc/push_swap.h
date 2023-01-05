@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:13:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/04 17:29:10 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/05 22:59:49 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	sort_five(t_s **s, t_s **d, char src, char dst);
 void	sort_stack(t_s **s, t_s **d, char src, char dst);
 
 /********** engine_utils.c *********/
+void	execute(t_s *cheapest, t_s **s, t_s **d);
 int		sub_sorted(t_s **s);
+int		moves(t_s *node, t_s **s, t_s **d);
+t_s		*find_cheapest(t_s **s, t_s **d);
 
 /************* input.c *************/
 int		valid_input(int argc, char **argv);
@@ -62,6 +65,13 @@ int		is_max(long int n, t_s **s);
 
 /********** stack_utils3.c *********/
 int		index_of_min(t_s **s);
+int		sorted_stacks(t_s **a, t_s **b);
+int		index_source(int num, t_s **s);
+int		index_dest(int num, t_s **d);
+
+/********** stack_utils4.c *********/
+int		get_max(t_s **s);
+int		get_min(t_s **s);
 
 /*********** operations.c **********/
 void	swap_stack(t_s **s, char stack);

@@ -6,7 +6,7 @@
 #    By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/10 15:47:55 by gda-cruz          #+#    #+#              #
-#    Updated: 2023/01/04 17:48:59 by gda_cruz         ###   ########.fr        #
+#    Updated: 2023/01/05 22:53:19 by gda_cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,15 +30,19 @@ SRC			=	srcs/mandatory/main.c \
 				srcs/mandatory/stack_utils.c \
 				srcs/mandatory/stack_utils2.c \
 				srcs/mandatory/stack_utils3.c \
+				srcs/mandatory/stack_utils4.c \
 
 B_SRC		=	srcs/bonus/main_bonus.c \
 				srcs/bonus/error_bonus.c \
+				srcs/bonus/utils_bonus.c \
 				srcs/bonus/operations_bonus.c \
 				srcs/mandatory/input.c \
 				srcs/mandatory/operations.c \
 				srcs/mandatory/free.c \
 				srcs/mandatory/stack_utils.c \
 				srcs/mandatory/stack_utils2.c \
+				srcs/mandatory/stack_utils3.c \
+				srcs/mandatory/stack_utils4.c \
 
 OBJ			=	$(SRC:srcs/mandatory/%.c=$(OBJ_DIR)/%.o)
 B_OBJ		=	$(B_SRC:srcs/bonus/%.c=$(B_OBJ_DIR)/%.o)

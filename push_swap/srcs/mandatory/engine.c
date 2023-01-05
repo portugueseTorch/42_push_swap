@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:38:56 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/04 17:49:27 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/05 23:07:00 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,49 +18,62 @@ void	sort_three(t_s **s, char src)
 	{
 		if (is_sorted(s))
 			break ;
-		if (is_max((*s)->n, s))	// first one is the max
+		if (is_max((*s)->n, s))
 			rotate(s, src);
-		if (is_max((*s)->next->next->n, s))	// third one is the max
+		else if (is_max((*s)->next->next->n, s))
 			swap_stack(s, src);
-		if (is_max((*s)->next->n, s))	// second one is the max
+		else
 			reverse_rotate(s, src);
 	}
 }
-
-// 3 2 1 5		| i = 2, s = 2	| rotate
-// 3 1 2 5		| i = 1, s = 2	| rotate
-// 3 2 1 0 4	| i = 3, s = 2	| reverse rotate
-// 2 1 0 4 3	| i = 2, s = 2	| rotate
-// 1 0 4 3 2	| i = 1, s = 2	| rotate
 
 void	sort_five(t_s **s, t_s **d, char src, char dst)
 {
 	int	size;
 	
 	size = stack_length(s);
-	while (size > 3)
+	if (size == 2)
+		swap_stack(s, src);
+	else
 	{
-		while (index_of_min(s) != 0)
+		while (size > 3)
 		{
-			if (index_of_min(s) <= size / 2)
-				rotate(s, src);
-			else
-				reverse_rotate(s, src);
+			while (index_of_min(s) != 0)
+			{
+				if (index_of_min(s) <= size / 2)
+					rotate(s, src);
+				else
+					reverse_rotate(s, src);
+			}
+			if (is_sorted(s))
+				break ;
+			push_stack(s, d, dst);
+			size = stack_length(s);
 		}
-		if (is_sorted(s))
-			return ;
-		push_stack(s, d, dst);
-		size = stack_length(s);
+		sort_three(s, src);
+		while (stack_length(d) > 0)
+			push_stack(d, s, src);
 	}
-	sort_three(s, src);
-	while (stack_length(d) > 0)
-		push_stack(d, s, src);
 }
 
-void	sort_general(t_s **s, t_s **d, char src, char dst)
+void	sort_general(t_s **s, t_s **d, char src, char dst);
 {
-	//TODODODODODODASLFKJASLKFJLSKADJFLKASJFKLASJKLDJSAKLDAS
-	//Acabar esta funcao
+	//At this point, stack B necessarily has at least on element
+	//As such, as long as stack b is not empty, keep finding the cheapest move and executing it
+	t_s *cheapest;
+	(void) dst;
+	while (stack_length(d))
+	{
+		cheapest = find_cheapest(s, d);
+		execute(cheapest, s, d);
+	}
+	while (!is_sorted(s))
+	{
+		if (index_of_min(s) <= (stack_length(s) / 2))
+			rotate(s, src);
+		else
+			reverse_rotate(s, src);
+	}
 }
 
 /*	While the stack is not sub-sorted or it has more than 5 numbers, push to b
@@ -73,18 +86,19 @@ void	sort_general(t_s **s, t_s **d, char src, char dst)
 	2 3 1 7 4 - invalid
 	7 8 4 5 2 3 - invalid
 */
-
 void	sort_stack(t_s **s, t_s **d, char src, char dst)
 {
 	if (!s || !*s || !d)
+		return ;
+	if (sorted_stacks(s, d))
 		return ;
 	if (stack_length(s) < 6)
 		sort_five(s, d, src, dst);
 	else
 	{
-		while (!sub_sorted(s) && stack_length(s) != 5)
+		while (!sub_sorted(s) && stack_length(s) > 5)
 			push_stack(s, d, dst);
-		if (stack_length(s) == 5)
+		if (!sub_sorted(s))
 			sort_five(s, d, src, dst);
 		sort_general(s, d, src, dst);
 	}
