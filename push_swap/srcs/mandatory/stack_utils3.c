@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 00:23:41 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/05 23:43:36 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:31:06 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,38 +56,39 @@ int	sorted_stacks(t_s **a, t_s **b)
 	return (1);
 }
 
-int	index_source(int num, t_s **s)
+int	index_source(int num, t_s **b)
 {
 	int	i;
 	t_s	*temp;
 
-	if (!*s)
+	if (!*b)
 		return (-1);
-	temp = *s;
+	temp = *b;
 	i = 0;
 	while (temp)
 	{
 		if (temp->n == num)
 			return (i);
 		i++;
+		temp = temp->next;
 	}
 	return (-1);
 }
 
 // 4 5 6 0 2
 // 0 1 2 3 4
-int	index_dest(int num, t_s **d)
+int	index_dest(int num, t_s **a)
 {
 	int	i;
 	t_s *temp;
 
-	if (!*d)
+	if (!*a)
 		return (-1);
-	temp = *d;
+	temp = *a;
 	i = 0;
-	if (num > get_max(d) || num < get_min(d))
-		return (index_of_min(d));
-	if (num < temp->n && num > stack_last(d)->n)
+	if (num > get_max(a) || num < get_min(a))
+		return (index_of_min(a));
+	if (num < temp->n && num > stack_last(a)->n)
 		return (0);
 	while (temp)
 	{

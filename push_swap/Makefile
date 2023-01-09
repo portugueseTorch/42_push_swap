@@ -6,7 +6,7 @@
 #    By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/10 15:47:55 by gda-cruz          #+#    #+#              #
-#    Updated: 2023/01/05 22:53:19 by gda_cruz         ###   ########.fr        #
+#    Updated: 2023/01/09 21:11:55 by gda_cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC			=	srcs/mandatory/main.c \
 				srcs/mandatory/stack_utils2.c \
 				srcs/mandatory/stack_utils3.c \
 				srcs/mandatory/stack_utils4.c \
+				srcs/bonus/operations_bonus.c \
 
 B_SRC		=	srcs/bonus/main_bonus.c \
 				srcs/bonus/error_bonus.c \

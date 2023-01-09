@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:51:57 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/05 23:06:33 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:41:03 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,34 +45,143 @@ int	sub_sorted(t_s **s)
 }
 
 /*
-	This function takes the node passed, and returns the number of moves
-	required to take that move from stack d to its rightful place in
-	stack s
+	This function takes the cost struct, and deals only with cases where they are
+	in different halves of the stacks, to evaluate if it's better to let them behave
+	normally, or to force both to either rr or rrr
 */
-int	moves(t_s *node, t_s **s, t_s **d)
+void	moves_forced(t_cost *c, t_s **a, t_s **b)
 {
-	
-}
-
-t_s	*find_cheapest(t_s **s, t_s **d)
-{
-	t_s	*temp;
-	t_s	*cheapest;
-
-	if (!*s)
-		return (NULL);
-	temp = *d;
-	cheapest = *d;
-	while (temp)
+	c->force_up = 0;
+	c->force_down = 0;
+	c->cost_forced = 0;
+	c->moves_a = index_dest(c->n, a);
+	c->moves_b = index_source(c->n, b);
+	while (c->moves_a > 0 || c->moves_b > 0)
 	{
-		if (moves(temp, s, d) < moves(cheapest, s, d))
-			cheapest = temp;
-		temp = temp->next;
+		c->force_up++;
+		c->moves_a--;
+		c->moves_b--;
 	}
-	return (cheapest);
+	c->moves_a = index_dest(c->n, a);
+	c->moves_b = index_source(c->n, b);
+	while (c->moves_a < c->length_a || c->moves_b < c->length_b)
+	{
+		c->force_down++;
+		c->moves_a++;
+		c->moves_b++;
+	}
+		
+	if (c->force_up < c->force_down)
+	{
+		c->cost_forced = c->force_up;
+		c->force_down = 0;
+	}
+	else
+	{
+		c->cost_forced = c->force_down;
+		c->force_up = 0;
+	}
 }
 
-void	execute(t_s *cheapest, t_s **s, t_s **d)
+void	moves_normal(t_cost *c)
 {
+	if (c->moves_a <= c->length_a / 2 && c->moves_b > c->length_b / 2)
+	{
+		while (c->moves_a > 0 || c->moves_b < c->length_b)
+		{
+			if (c->moves_a > 0 && c->moves_b < c->length_b)
+				c->cost_normal += 2;
+			else
+				c->cost_normal++;
+			c->moves_a--;
+			c->moves_b++;
+		}
+	}
+	else if (c->moves_a > c->length_a / 2 && c->moves_b <= c->length_b / 2)
+	{
+		while (c->moves_a < c->length_a || c->moves_b > 0)
+		{
+			if (c->moves_b > 0 && c->moves_a < c->length_a)
+				c->cost_normal += 2;
+			else
+				c->cost_normal++;
+			c->moves_a++;
+			c->moves_b--;
+			printf("moves_a: %i\n", c->moves_a);
+			printf("moves_b: %i\n", c->moves_b);
+		}
+	}
+}
+/*
+	This function will deal only with the scenarios when the numbers are always
+	in the same halves of the stacks, so we can always use only one rule (rr)
+*/
+int	moves(t_s *node, t_cost *c, t_s **a, t_s **b)
+{
+	c->n = node->n;
+	c->length_a = stack_length(a);
+	c->length_b = stack_length(b);
+	c->moves_a = index_dest(c->n, a);
+	c->moves_b = index_source(c->n, b);
+	c->cost_normal = 0;
+	display_stacks(a, b);
+	printf("Number: %li\n\n", c->n);
+	if (c->moves_a == -1 || c->moves_b == -1)
+		return (-1);
+	printf("length_a: %i\n", c->length_a);
+	printf("length_b: %i\n", c->length_b);
+	printf("moves_a: %i\n", c->moves_a);
+	printf("moves_b: %i\n", c->moves_b);
+	if (c->moves_a <= c->length_a / 2 && c->moves_b <= c->length_b / 2)
+		while (c->moves_a-- > 0 || c->moves_b-- > 0)
+			c->cost_normal++;
+	else if (c->moves_a > c->length_a / 2 && c->moves_b > c->length_b / 2)
+		while (c->moves_a++ < c->length_a || c->moves_b-- < c->length_b)
+			c->cost_normal++;
+	printf("\ncost normal: %i\n\n", c->cost_normal);
+	printf("moves_a: %i\n", c->moves_a);
+	printf("moves_b: %i\n\n", c->moves_b);
+	if (c->cost_normal)
+		printf("======================================\n\n");
+	if (c->cost_normal)
+		return (c->cost_normal);
+	moves_normal(c);
+	moves_forced(c, a, b);
+	printf("cost normal: %i\n", c->cost_normal);
+	printf("cost forced: %i\n\n", c->cost_forced);
+	printf("======================================\n\n");
+	if (c->cost_forced < c->cost_normal)
+		return (c->cost_forced);
+	return (c->cost_normal);
+}
+
+t_cost	*find_cheapest(t_s **a, t_s **b)
+{
+	t_cost	*c;
+
+	c = (t_cost *)malloc(sizeof(t_cost));
+	if (!c || !*a || !*b)
+		return (NULL);
+	c->temp = (*b)->next;
+	c->cheapest = *b;
+	while (c->temp)
+	{
+		if (moves(c->temp, c, a, b) < moves(c->cheapest, c, a, b))
+			c->cheapest = c->temp;
+		printf("\n");
+		c->temp = c->temp->next;
+	}
+	moves(c->cheapest, c, a, b);
+	c->moves_a = index_dest(c->n, a);
+	c->moves_b = index_source(c->n, b);	
+	printf("cheapest: %li\n", c->cheapest->n);
+	printf("moves_a: %i\n", c->moves_a);
+	printf("moves_b: %i\n", c->moves_b);;
+	printf("cost normal: %i\n", c->cost_normal);
+	printf("cost forced: %i\n", c->cost_forced);
+	printf("force up: %i\n", c->force_up);
+	printf("force down: %i\n", c->force_down);
+	printf("======================================\n\n");
 	
+	return (c);
 }
