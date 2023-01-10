@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:13:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/09 21:11:21 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/09 23:59:38 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_cost
 	int			cost_forced;	// cost of forcing execution of moves implied using rr or rrr
 	int			force_up;		// flag to signal that we are using rrr
 	int			force_down;		// flag to signal that we are using rr
+	int			force;			// flag to signal that we are using rr
 	t_s			*cheapest;		// cheapest node to work with next
 	t_s			*temp;			// temporary for iteration
 }	t_cost;

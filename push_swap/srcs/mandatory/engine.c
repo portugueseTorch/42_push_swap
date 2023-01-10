@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:38:56 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/09 21:48:39 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/10 00:07:08 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	sort_five(t_s **s, t_s **d, char src, char dst)
 			size = stack_length(s);
 		}
 		sort_three(s, src);
-		while (stack_length(d) > 0)
+		while (stack_length(d) > 0 && stack_length(s) < 5)
 			push_stack(d, s, src);
 	}
 }
@@ -60,8 +60,12 @@ void	execute_force(t_cost *c, t_s **a, t_s **b)
 {
 	if (c->force_up)
 	{
-		while (c->moves_a-- > 0 && c->moves_b-- > 0)
+		while (c->moves_a > 0 && c->moves_b > 0)
+		{
 			rotate_both(a, b);
+			c->moves_a--;
+			c->moves_b--;
+		}
 		if (c->moves_a > 0)
 			while (c->moves_a-- > 0)
 				rotate(a, 'a');
@@ -78,10 +82,10 @@ void	execute_force(t_cost *c, t_s **a, t_s **b)
 			c->moves_a++;
 			c->moves_b++;
 		}
-		if (c->moves_a < c->length_a)
+		if (c->moves_a && c->moves_a < c->length_a)
 			while (c->moves_a++ < c->length_a)
 				reverse_rotate(a, 'a');
-		if (c->moves_b < c->length_b)
+		if (c->moves_b && c->moves_b < c->length_b)
 			while (c->moves_b++ < c->length_b)
 				reverse_rotate(b, 'b');
 	}
@@ -89,14 +93,22 @@ void	execute_force(t_cost *c, t_s **a, t_s **b)
 
 void	execute(t_cost *c, t_s **a, t_s **b)
 {
-	if (c->cost_normal < c->cost_forced)
+	if (!c->force)
 	{
 		if (c->moves_a <= c->length_a / 2 && c->moves_b <= c->length_b / 2)
-			while (c->moves_a-- > 0 && c->moves_b-- > 0)
+			while (c->moves_a > 0 && c->moves_b > 0)
+			{
 				rotate_both(a, b);
+				c->moves_a--;
+				c->moves_b--;
+			}
 		else if (c->moves_a > c->length_a / 2 && c->moves_b > c->length_b / 2)
-			while (c->moves_a++ < c->length_a || c->moves_b-- < c->length_b)
+			while (c->moves_a < c->length_a && c->moves_b < c->length_b)
+			{
 				reverse_rotate_both(a, b);
+				c->moves_a++;
+				c->moves_b++;
+			}
 		if (c->moves_a > 0 && c->moves_a <= c->length_a / 2)
 			while (c->moves_a-- > 0)
 				rotate(a, 'a');
@@ -128,7 +140,7 @@ void	sort_general(t_s **a, t_s **b, char src, char dst)
 		// 	return (NULL);
 		execute(cheapest, a, b);
 		display_stacks(a, b);
-		printf("\n\n=======================\n\n");
+		// printf("\n\n=======================\n\n");
 		free(cheapest);
 	}
 	while (!is_sorted(a))
