@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:38:56 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/11 01:41:56 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:35:15 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	sort_five(t_s **s, t_s **d, char src, char dst)
 		while (stack_length(d) > 0 && stack_length(s) < 5)
 			push_stack(d, s, src);
 	}
-	// display_stacks(s, d);
 }
 
 void	execute_force(t_cost *c, t_s **a, t_s **b)
@@ -108,17 +107,14 @@ void	execute(t_cost *c, t_s **a, t_s **b)
 
 void	sort_general(t_s **a, t_s **b, char src, char dst)
 {
-	//At this point, stack B necessarily has at least on element
-	//As such, as long as stack b is not empty, keep finding the cheapest move and executing it
 	t_cost *cheapest;
 	(void) dst;
 	while (stack_length(b))
 	{
 		cheapest = find_cheapest(a, b);
-		// if (!cheapest)
-		// 	return (NULL);
+		if (!cheapest)
+			return (NULL);
 		execute(cheapest, a, b);
-		// display_stacks(a, b);
 		free(cheapest);
 	}
 	while (!is_sorted(a))
@@ -130,34 +126,30 @@ void	sort_general(t_s **a, t_s **b, char src, char dst)
 	}
 }
 
-/*	While the stack is not sub-sorted or it has more than 5 numbers, push to b
-	A sub-sorted stack will be one where inside it there is a sorted section and
-	in this case the first element is also larger than the last, so that the stack
-	can be sorted using only reverse or rotates.
-
-	8 9 1 2 3 - valid
-	6 7 3 4 5 - valid
-	2 3 1 7 4 - invalid
-	7 8 4 5 2 3 - invalid
-*/
 void	sort_stack(t_s **s, t_s **d, char src, char dst)
 {
 	if (!s || !*s || !d)
 		return ;
-	if (sorted_stacks(s, d))
-		return ;
 	if (stack_length(s) == 2)
 		swap_stack(s, 'a');
-	else if (stack_length(s) == 3)
-		sort_three(s, 'a');
-	else if (stack_length(s) == 5)
+	else if (stack_length(s) < 6)
 		sort_five(s, d, src, dst);
 	else
 	{
-		while (!sub_sorted(s) && stack_length(s) > 5)
-			push_stack(s, d, dst);
-		if (!sub_sorted(s))
-			sort_five(s, d, src, dst);
+		if (stack_length(s) > 200)
+		{
+			while (!sub_sorted(s) && stack_length(s) > 5)
+				push_stack(s, d, dst);
+			if (!sub_sorted(s))
+				sort_five(s, d, src, dst);
+		}
+		else
+		{
+			while (!sub_sorted(s) && stack_length(s) > 3)
+				push_stack(s, d, dst);
+			if (!sub_sorted(s))
+				sort_three(s, src);
+		}
 		sort_general(s, d, src, dst);
 	}
 }
