@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 00:23:41 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/09 19:31:06 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:39:37 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,22 @@ int	index_dest(int num, t_s **a)
 		temp = temp->next;
 	}
 	return (i + 1);
+}
+
+void	execute_normal_aux(t_cost *c, t_s **a, t_s **b)
+{
+	if (c->moves_a <= c->length_a / 2 && c->moves_b > c->length_b / 2)
+	{
+		while (c->moves_a-- > 0)
+			rotate(a, 'a');
+		while (c->moves_b++ < c->length_b)
+			reverse_rotate(b, 'b');
+	}
+	else if (c->moves_a > c->length_a / 2 && c->moves_b <= c->length_b / 2)
+	{
+		while (c->moves_a++ < c->length_a)
+			reverse_rotate(a, 'a');
+		while (c->moves_b-- > 0)
+			rotate(b, 'b');
+	}
 }

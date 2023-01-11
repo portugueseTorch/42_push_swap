@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:13:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/09 23:59:38 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:37:12 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ typedef struct s_stack
 typedef struct s_cost
 {
 	long int	n;				// number being evaluated (content of s->n)
-	int			moves_a;		// moves to get the evaluated node to the right place in stack a
-	int			moves_b;		// moves to get the evaluated node to the top of stack b
 	int			length_a;		// length of stack a
 	int			length_b;		// length of stack b
+	int			moves_a;		// moves to get the evaluated node to the right place in stack a
+	int			moves_b;		// moves to get the evaluated node to the top of stack b
 	int			cost_normal;	// cost of executing implied moves_a and moves_b in the natural order
 	int			cost_forced;	// cost of forcing execution of moves implied using rr or rrr
 	int			force_up;		// flag to signal that we are using rrr
@@ -59,6 +59,7 @@ void	execute_force(t_cost *c, t_s **a, t_s **b);
 void	execute(t_cost *c, t_s **a, t_s **b);
 int		sub_sorted(t_s **s);
 int		moves(t_s *node, t_cost *c, t_s **a, t_s **b);
+void	moves_normal(t_cost *c, t_s **a, t_s **b);
 t_cost	*find_cheapest(t_s **a, t_s **b);
 
 /************* input.c *************/
@@ -88,10 +89,14 @@ int		index_of_min(t_s **s);
 int		sorted_stacks(t_s **a, t_s **b);
 int		index_source(int num, t_s **b);
 int		index_dest(int num, t_s **a);
+void	execute_normal_aux(t_cost *c, t_s **a, t_s **b);
 
 /********** stack_utils4.c *********/
 int		get_max(t_s **s);
 int		get_min(t_s **s);
+void	init_cost(t_s *node, t_cost *c, t_s **a, t_s **b);
+void	execute_aux(t_cost *c, t_s **a, t_s **b);
+void	execute_force_aux(t_cost *c, t_s **a, t_s **b);
 
 /*********** operations.c **********/
 void	swap_stack(t_s **s, char stack);

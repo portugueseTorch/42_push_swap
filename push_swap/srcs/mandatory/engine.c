@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:38:56 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/10 00:07:08 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 01:20:36 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,73 +54,52 @@ void	sort_five(t_s **s, t_s **d, char src, char dst)
 		while (stack_length(d) > 0 && stack_length(s) < 5)
 			push_stack(d, s, src);
 	}
+	// display_stacks(s, d);
 }
 
 void	execute_force(t_cost *c, t_s **a, t_s **b)
 {
-	if (c->force_up)
+	if (c->cost_forced <= c->cost_normal)
 	{
-		while (c->moves_a > 0 && c->moves_b > 0)
+		if (c->force_up <= c->force_down)
 		{
-			rotate_both(a, b);
-			c->moves_a--;
-			c->moves_b--;
-		}
-		if (c->moves_a > 0)
-			while (c->moves_a-- > 0)
-				rotate(a, 'a');
-		if (c->moves_b > 0)
-			while (c->moves_b-- > 0)
-				rotate(b, 'b');
-	}
-	else
-	{
-		while (c->moves_a < c->length_a && c->moves_b < c->length_b
-			&& c->moves_a && c->moves_b)
-		{
-			reverse_rotate_both(a, b);
-			c->moves_a++;
-			c->moves_b++;
-		}
-		if (c->moves_a && c->moves_a < c->length_a)
-			while (c->moves_a++ < c->length_a)
-				reverse_rotate(a, 'a');
-		if (c->moves_b && c->moves_b < c->length_b)
-			while (c->moves_b++ < c->length_b)
-				reverse_rotate(b, 'b');
-	}
-}
-
-void	execute(t_cost *c, t_s **a, t_s **b)
-{
-	if (!c->force)
-	{
-		if (c->moves_a <= c->length_a / 2 && c->moves_b <= c->length_b / 2)
 			while (c->moves_a > 0 && c->moves_b > 0)
 			{
 				rotate_both(a, b);
 				c->moves_a--;
 				c->moves_b--;
 			}
-		else if (c->moves_a > c->length_a / 2 && c->moves_b > c->length_b / 2)
-			while (c->moves_a < c->length_a && c->moves_b < c->length_b)
-			{
-				reverse_rotate_both(a, b);
-				c->moves_a++;
-				c->moves_b++;
-			}
-		if (c->moves_a > 0 && c->moves_a <= c->length_a / 2)
 			while (c->moves_a-- > 0)
 				rotate(a, 'a');
-		else if (c->moves_a > 0 && c->moves_a > c->length_a / 2)
-			while (c->moves_a++ < c->length_a)
-				reverse_rotate(a, 'a');
-		if (c->moves_b > 0 && c->moves_b <= c->length_b / 2)
 			while (c->moves_b-- > 0)
 				rotate(b, 'b');
-		else if (c->moves_b > 0 && c->moves_b > c->length_b / 2)
-			while (c->moves_b++ < c->length_b)
-				reverse_rotate(b, 'b');
+		}
+		else
+			execute_force_aux(c, a, b);
+	}
+	else
+		execute_normal_aux(c, a, b);
+}
+
+void	execute(t_cost *c, t_s **a, t_s **b)
+{
+	if (c->force == 0)
+	{
+		if (c->moves_a <= c->length_a / 2 && c->moves_b <= c->length_b / 2)
+		{
+			while (c->moves_a > 0 && c->moves_b > 0)
+			{
+				rotate_both(a, b);
+				c->moves_a--;
+				c->moves_b--;
+			}
+			while (c->moves_a-- > 0)
+				rotate(a, 'a');
+			while (c->moves_b-- > 0)
+				rotate(b, 'b');
+		}
+		else if (c->moves_a > c->length_a / 2 && c->moves_b > c->length_b / 2)
+			execute_aux(c, a, b);
 	}
 	else
 		execute_force(c, a, b);
@@ -139,8 +118,7 @@ void	sort_general(t_s **a, t_s **b, char src, char dst)
 		// if (!cheapest)
 		// 	return (NULL);
 		execute(cheapest, a, b);
-		display_stacks(a, b);
-		// printf("\n\n=======================\n\n");
+		// display_stacks(a, b);
 		free(cheapest);
 	}
 	while (!is_sorted(a))
@@ -168,14 +146,18 @@ void	sort_stack(t_s **s, t_s **d, char src, char dst)
 		return ;
 	if (sorted_stacks(s, d))
 		return ;
-	if (stack_length(s) < 6)
+	if (stack_length(s) == 2)
+		swap_stack(s, 'a');
+	else if (stack_length(s) == 3)
+		sort_three(s, 'a');
+	else if (stack_length(s) == 5)
 		sort_five(s, d, src, dst);
 	else
 	{
 		while (!sub_sorted(s) && stack_length(s) > 5)
 			push_stack(s, d, dst);
 		if (!sub_sorted(s))
-			sort_five(s, d, src, dst);
+			sort_three(s, d, src, dst);
 		sort_general(s, d, src, dst);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:51:57 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/10 00:00:37 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 01:11:11 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ int	sub_sorted(t_s **s)
 
 	if (!*s)
 		return (-1);
+	if (is_sorted(s))
+		return (1);
 	temp = *s;
 	n = temp->n;
 	while (temp->next && temp->n < temp->next->n)
 		temp = temp->next;
-		
 	temp = temp->next;
 	while (temp->next)
 	{
@@ -51,11 +52,6 @@ int	sub_sorted(t_s **s)
 */
 void	moves_forced(t_cost *c, t_s **a, t_s **b)
 {
-	c->force_up = 0;
-	c->force_down = 0;
-	c->cost_forced = 0;
-	c->moves_a = index_dest(c->n, a);
-	c->moves_b = index_source(c->n, b);
 	while (c->moves_a > 0 || c->moves_b > 0)
 	{
 		c->force_up++;
@@ -64,54 +60,37 @@ void	moves_forced(t_cost *c, t_s **a, t_s **b)
 	}
 	c->moves_a = index_dest(c->n, a);
 	c->moves_b = index_source(c->n, b);
-	while (c->moves_a < c->length_a || c->moves_b < c->length_b)
+	while ((c->moves_a || c->moves_b)
+		&& (c->moves_a < c->length_a || c->moves_b < c->length_b))
 	{
 		c->force_down++;
 		c->moves_a++;
 		c->moves_b++;
 	}
-		
-	if (c->force_up < c->force_down)
-	{
+	if (c->force_up <= c->force_down)
 		c->cost_forced = c->force_up;
-		c->force_down = 0;
-	}
 	else
-	{
 		c->cost_forced = c->force_down;
-		c->force_up = 0;
-	}
 }
 
-void	moves_normal(t_cost *c)
+void	moves_normal(t_cost *c, t_s **a, t_s **b)
 {
+	if (c->moves_a <= c->length_a / 2)
+		while (c->moves_a-- > 0)
+			c->cost_normal++;
+	else
+		while (c->moves_a && c->moves_a++ < c->length_a)
+			c->cost_normal++;
+	if (c->moves_b <= c->length_b / 2)
+		while (c->moves_b-- > 0)
+			c->cost_normal++;
+	else
+		while (c->moves_b && c->moves_b++ < c->length_b)
+			c->cost_normal++;
+	c->moves_a = index_dest(c->n, a);
+	c->moves_b = index_source(c->n, b);
 	c->force = 1;
-	if (c->moves_a <= c->length_a / 2 && c->moves_b > c->length_b / 2)
-	{
-		while (c->moves_a > 0 || c->moves_b < c->length_b)
-		{
-			if (c->moves_a > 0 && c->moves_b < c->length_b)
-				c->cost_normal += 2;
-			else
-				c->cost_normal++;
-			c->moves_a--;
-			c->moves_b++;
-		}
-	}
-	else if (c->moves_a > c->length_a / 2 && c->moves_b <= c->length_b / 2)
-	{
-		while (c->moves_a < c->length_a || c->moves_b > 0)
-		{
-			if (c->moves_b > 0 && c->moves_a < c->length_a)
-				c->cost_normal += 2;
-			else
-				c->cost_normal++;
-			c->moves_a++;
-			c->moves_b--;
-			printf("moves_a: %i\n", c->moves_a);
-			printf("moves_b: %i\n", c->moves_b);
-		}
-	}
+	moves_forced(c, a, b);
 }
 /*
 	This function will deal only with the scenarios when the numbers are always
@@ -119,41 +98,37 @@ void	moves_normal(t_cost *c)
 */
 int	moves(t_s *node, t_cost *c, t_s **a, t_s **b)
 {
-	c->n = node->n;
-	c->length_a = stack_length(a);
-	c->length_b = stack_length(b);
-	c->moves_a = index_dest(c->n, a);
-	c->moves_b = index_source(c->n, b);
-	c->cost_normal = 0;
-	c->cost_forced = 0;
-	c->force = 0;
-	display_stacks(a, b);
-	printf("Number: %li\n\n", c->n);
+	init_cost(node, c, a, b);
+	// display_stacks(a, b);
+	// printf("Number: %li\n\n", c->n);
 	if (c->moves_a == -1 || c->moves_b == -1)
 		return (-1);
-	printf("length_a: %i\n", c->length_a);
-	printf("length_b: %i\n", c->length_b);
-	printf("moves_a: %i\n", c->moves_a);
-	printf("moves_b: %i\n", c->moves_b);
+	// printf("length_a: %i\n", c->length_a);
+	// printf("length_b: %i\n", c->length_b);
+	// printf("moves_a: %i\n", c->moves_a);
+	// printf("moves_b: %i\n", c->moves_b);
 	if (c->moves_a <= c->length_a / 2 && c->moves_b <= c->length_b / 2)
-		while ((c->moves_a-- > 0) | (c->moves_b-- > 0))
+		while ((c->moves_a > 0 || c->moves_b > 0)
+			&& c->moves_a-- < c->length_a && c->moves_b-- < c->length_b)
 			c->cost_normal++;
 	else if (c->moves_a > c->length_a / 2 && c->moves_b > c->length_b / 2)
-		while ((c->moves_a++ < c->length_a) | (c->moves_b-- < c->length_b))
+		while ((c->moves_a < c->length_a || c->moves_b < c->length_b)
+			&& c->moves_a++ && c->moves_b++)
 			c->cost_normal++;
-	printf("\ncost normal: %i\n\n", c->cost_normal);
-	printf("moves_a: %i\n", c->moves_a);
-	printf("moves_b: %i\n\n", c->moves_b);
-	if (c->cost_normal)
-		printf("======================================\n\n");
-	if (c->moves_a != index_dest(c->n, a) || c->moves_b != index_source(c->n, b))
-		return (c->cost_normal);
-	moves_normal(c);
-	moves_forced(c, a, b);
-	printf("cost normal: %i\n", c->cost_normal);
-	printf("cost forced: %i\n\n", c->cost_forced);
-	printf("======================================\n\n");
-	if (c->cost_forced < c->cost_normal)
+	else
+		moves_normal(c, a, b);
+	c->moves_a = index_dest(c->n, a);
+	c->moves_b = index_source(c->n, b);
+	// printf("\ncost normal: %i\n\n", c->cost_normal);
+	// printf("moves_a: %i\n", c->moves_a);
+	// printf("moves_b: %i\n\n", c->moves_b);
+	// printf("force flag: %i\n", c->force);
+	// printf("force up: %i\n", c->force_up);
+	// printf("force down: %i\n\n", c->force_down);
+	// printf("cost normal: %i\n", c->cost_normal);
+	// printf("cost forced: %i\n\n", c->cost_forced);
+	// printf("======================================\n\n");
+	if (c->force && c->cost_forced < c->cost_normal)
 		return (c->cost_forced);
 	return (c->cost_normal);
 }
@@ -164,7 +139,7 @@ t_cost	*find_cheapest(t_s **a, t_s **b)
 	int		cheapest_moves;
 
 	c = (t_cost *)malloc(sizeof(t_cost));
-	if (!c || !*a || !*b)
+	if (!c)
 		return (NULL);
 	c->temp = (*b)->next;
 	c->cheapest = *b;
@@ -175,20 +150,22 @@ t_cost	*find_cheapest(t_s **a, t_s **b)
 		{
 			c->cheapest = c->temp;
 			cheapest_moves = moves(c->cheapest, c, a, b);
+			// printf("New cheapest: %li\n", c->cheapest->n);
+			// printf("\n======================================\n\n");
 		}
-		printf("\n");
+		// printf("\n");
 		c->temp = c->temp->next;
 	}
 	moves(c->cheapest, c, a, b);
 	c->moves_a = index_dest(c->n, a);
-	c->moves_b = index_source(c->n, b);	
-	printf("cheapest: %li\n", c->cheapest->n);
-	printf("moves_a: %i\n", c->moves_a);
-	printf("moves_b: %i\n", c->moves_b);;
-	printf("cost normal: %i\n", c->cost_normal);
-	printf("cost forced: %i\n", c->cost_forced);
-	printf("force up: %i\n", c->force_up);
-	printf("force down: %i\n", c->force_down);
-	printf("======================================\n\n");
+	c->moves_b = index_source(c->n, b);
+	// printf("cheapest: %li\n", c->cheapest->n);
+	// printf("moves_a: %i\n", c->moves_a);
+	// printf("moves_b: %i\n", c->moves_b);;
+	// printf("cost normal: %i\n", c->cost_normal);
+	// printf("cost forced: %i\n", c->cost_forced);
+	// printf("force up: %i\n", c->force_up);
+	// printf("force down: %i\n", c->force_down);
+	// printf("======================================\n\n");
 	return (c);
 }
