@@ -3,44 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 17:02:56 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/11 10:33:12 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:52:06 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	display_stacks(t_s **a, t_s **b)
-{
-	t_s		*temp;
+// void	display_stacks(t_s **a, t_s **b)
+// {
+// 	t_s		*temp;
 
-	temp = *a;
-	printf("A = [ ");
-	if (temp)
-	{
-		for(; temp; temp = temp->next)
-		{
-			printf("%ld", temp->n);
-			if (temp->next)
-				printf(", ");
-		}
-	}
-	printf(" ]\n");
-	temp = *b;
-	printf("B = [ ");
-	if (temp)
-	{
-		for(; temp; temp = temp->next)
-		{
-			printf("%ld", temp->n);
-			if (temp->next)
-				printf(", ");
-		}
-	}
-	printf(" ]\n\n");
-}
+// 	temp = *a;
+// 	printf("A = [ ");
+// 	if (temp)
+// 	{
+// 		for(; temp; temp = temp->next)
+// 		{
+// 			printf("%ld", temp->n);
+// 			if (temp->next)
+// 				printf(", ");
+// 		}
+// 	}
+// 	printf(" ]\n");
+// 	temp = *b;
+// 	printf("B = [ ");
+// 	if (temp)
+// 	{
+// 		for(; temp; temp = temp->next)
+// 		{
+// 			printf("%ld", temp->n);
+// 			if (temp->next)
+// 				printf(", ");
+// 		}
+// 	}
+// 	printf(" ]\n\n");
+// }
 
 int	main(int argc, char **argv)
 {

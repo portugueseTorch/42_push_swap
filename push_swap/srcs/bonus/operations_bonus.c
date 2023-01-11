@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations.c                                       :+:      :+:    :+:   */
+/*   operations_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 11:01:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/11 13:57:33 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:08:07 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ void	swap_stack(t_s **s, char stack)
 {
 	t_s	*temp;
 
+	(void) stack;
 	if (stack_length(s) < 2 || !*s)
 		return ;
 	temp = *s;
 	*s = temp->next;
 	temp->next = temp->next->next;
 	(*s)->next = temp;
-	if (stack)
-		ft_printf("s%c\n", stack);
 }
 
 void	push_stack(t_s **src, t_s **dst, char stack)
 {
 	t_s	*temp;
 
+	(void) stack;
 	if (!src)
 		return ;
 	temp = *src;
@@ -37,8 +37,6 @@ void	push_stack(t_s **src, t_s **dst, char stack)
 		return ;
 	remove_block(src);
 	add_block_start(dst, temp);
-	if (stack)
-		ft_printf("p%c\n", stack);
 }
 
 void	rotate(t_s **s, char stack)
@@ -46,6 +44,7 @@ void	rotate(t_s **s, char stack)
 	t_s	*temp;
 	t_s	*last;
 
+	(void) stack;
 	if (!*s)
 		return ;
 	if (stack_length(s) == 1)
@@ -60,8 +59,6 @@ void	rotate(t_s **s, char stack)
 		temp->next = NULL;
 		last->next = temp;
 	}
-	if (stack)
-		ft_printf("r%c\n", stack);
 }
 
 void	reverse_rotate(t_s **s, char stack)
@@ -69,6 +66,7 @@ void	reverse_rotate(t_s **s, char stack)
 	t_s	*temp;
 	t_s	*snd_last;
 
+	(void) stack;
 	if (!*s)
 		return ;
 	if (stack_length(s) == 1)
@@ -83,6 +81,4 @@ void	reverse_rotate(t_s **s, char stack)
 		(*s)->next = temp;
 		snd_last->next = NULL;
 	}
-	if (stack)
-		ft_printf("rr%c\n", stack);
 }

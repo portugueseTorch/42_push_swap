@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:38:56 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/11 11:35:15 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:59:09 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	sort_three(t_s **s, char src)
 void	sort_five(t_s **s, t_s **d, char src, char dst)
 {
 	int	size;
-	
+
 	size = stack_length(s);
 	if (size == 2)
 		swap_stack(s, src);
@@ -54,30 +54,6 @@ void	sort_five(t_s **s, t_s **d, char src, char dst)
 		while (stack_length(d) > 0 && stack_length(s) < 5)
 			push_stack(d, s, src);
 	}
-}
-
-void	execute_force(t_cost *c, t_s **a, t_s **b)
-{
-	if (c->cost_forced <= c->cost_normal)
-	{
-		if (c->force_up <= c->force_down)
-		{
-			while (c->moves_a > 0 && c->moves_b > 0)
-			{
-				rotate_both(a, b);
-				c->moves_a--;
-				c->moves_b--;
-			}
-			while (c->moves_a-- > 0)
-				rotate(a, 'a');
-			while (c->moves_b-- > 0)
-				rotate(b, 'b');
-		}
-		else
-			execute_force_aux(c, a, b);
-	}
-	else
-		execute_normal_aux(c, a, b);
 }
 
 void	execute(t_cost *c, t_s **a, t_s **b)
@@ -107,13 +83,14 @@ void	execute(t_cost *c, t_s **a, t_s **b)
 
 void	sort_general(t_s **a, t_s **b, char src, char dst)
 {
-	t_cost *cheapest;
+	t_cost	*cheapest;
+
 	(void) dst;
 	while (stack_length(b))
 	{
 		cheapest = find_cheapest(a, b);
 		if (!cheapest)
-			return (NULL);
+			error_handle("Error finding cheapest", cheapest, a, b);
 		execute(cheapest, a, b);
 		free(cheapest);
 	}

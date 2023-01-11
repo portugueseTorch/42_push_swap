@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 21:13:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/01/10 16:37:12 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:58:42 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,22 @@ typedef struct s_stack
 
 typedef struct s_cost
 {
-	long int	n;				// number being evaluated (content of s->n)
-	int			length_a;		// length of stack a
-	int			length_b;		// length of stack b
-	int			moves_a;		// moves to get the evaluated node to the right place in stack a
-	int			moves_b;		// moves to get the evaluated node to the top of stack b
-	int			cost_normal;	// cost of executing implied moves_a and moves_b in the natural order
-	int			cost_forced;	// cost of forcing execution of moves implied using rr or rrr
-	int			force_up;		// flag to signal that we are using rrr
-	int			force_down;		// flag to signal that we are using rr
-	int			force;			// flag to signal that we are using rr
-	t_s			*cheapest;		// cheapest node to work with next
-	t_s			*temp;			// temporary for iteration
+	long int	n;
+	int			length_a;
+	int			length_b;
+	int			moves_a;
+	int			moves_b;
+	int			cost_normal;
+	int			cost_forced;
+	int			force_up;
+	int			force_down;
+	int			force;
+	t_s			*cheapest;
+	t_s			*temp;
 }	t_cost;
 
-
 /************** main.c *************/
-void	display_stacks(t_s **a, t_s **b);
+// void	display_stacks(t_s **a, t_s **b);
 
 /************* engine.c ************/
 void	sort_three(t_s **s, char src);
@@ -53,7 +52,6 @@ void	sort_five(t_s **s, t_s **d, char src, char dst);
 void	sort_stack(t_s **s, t_s **d, char src, char dst);
 void	sort_general(t_s **a, t_s **b, char src, char dst);
 void	execute(t_cost *c, t_s **a, t_s **b);
-void	execute_force(t_cost *c, t_s **a, t_s **b);
 
 /********** engine_utils.c *********/
 void	execute(t_cost *c, t_s **a, t_s **b);
@@ -76,6 +74,7 @@ int		stack_length(t_s **s);
 t_s		*new_stack(int n);
 t_s		*stack_last(t_s **s);
 t_s		*stack_snd_last(t_s **s);
+void	execute_force(t_cost *c, t_s **a, t_s **b);
 
 /********** stack_utils2.c *********/
 void	add_block_end(t_s **s, t_s *new);
@@ -111,5 +110,6 @@ void	swap_both(t_s **a, t_s **b);
 void	rotate_both(t_s **a, t_s **b);
 void	reverse_rotate_both(t_s **a, t_s **b);
 void	error_handler(char *rule, t_s **a, t_s **b);
+void	error_handle(char *err, t_cost *c, t_s **a, t_s **b);
 
 #endif

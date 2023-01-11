@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 00:23:41 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/10 16:39:37 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:00:51 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,10 @@ int	index_source(int num, t_s **b)
 	return (-1);
 }
 
-// 4 5 6 0 2
-// 0 1 2 3 4
 int	index_dest(int num, t_s **a)
 {
 	int	i;
-	t_s *temp;
+	t_s	*temp;
 
 	if (!*a)
 		return (-1);
@@ -93,7 +91,7 @@ int	index_dest(int num, t_s **a)
 	while (temp)
 	{
 		if (!temp->next || (num > temp->n && num < temp->next->n))
-			break;
+			break ;
 		i++;
 		temp = temp->next;
 	}

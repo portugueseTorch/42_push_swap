@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+         #
+#    By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/10 15:47:55 by gda-cruz          #+#    #+#              #
-#    Updated: 2023/01/11 10:24:34 by gda_cruz         ###   ########.fr        #
+#    Updated: 2023/01/11 15:09:06 by gda-cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,8 @@ B_SRC		=	srcs/bonus/main_bonus.c \
 				srcs/bonus/utils_bonus.c \
 				srcs/mandatory/input.c \
 				srcs/mandatory/error_handler.c \
-				srcs/mandatory/operations.c \
-				srcs/mandatory/operations2.c \
+				srcs/bonus/operations_bonus.c \
+				srcs/bonus/operations_bonus2.c \
 				srcs/mandatory/free.c \
 				srcs/mandatory/stack_utils.c \
 				srcs/mandatory/stack_utils2.c \
@@ -69,8 +69,7 @@ $(BIN):	$(OBJ) | $(BIN_DIR)
 	@make -s -C $(LIBFT_DIR)
 	@echo "$(LIGHT_GREEN)  Libft successfully compiled.$(RESET)"
 	@$(CC) $(CFLAGS) -o $(@) $(^) -L$(LIBFT_DIR) -lft
-	@echo "$(LIGHT_GREEN)  push_swap successfully compiled.$(RESET)"
-	@echo "$(GREEN)\n$(RESET)"
+	@echo "$(LIGHT_GREEN)  push_swap successfully compiled.\n$(RESET)"
 
 $(OBJ_DIR)/%.o:	srcs/mandatory/%.c | $(BUILD_DIR)
 	@$(CC) $(CFLAGS) -c $(^) -o $(@)

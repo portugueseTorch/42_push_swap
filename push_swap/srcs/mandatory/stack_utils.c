@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 00:40:19 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/12/24 17:21:24 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:46:37 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,28 @@ t_s	*new_stack(int n)
 	new->n = n;
 	new->next = NULL;
 	return (new);
+}
+
+void	execute_force(t_cost *c, t_s **a, t_s **b)
+{
+	if (c->cost_forced <= c->cost_normal)
+	{
+		if (c->force_up <= c->force_down)
+		{
+			while (c->moves_a > 0 && c->moves_b > 0)
+			{
+				rotate_both(a, b);
+				c->moves_a--;
+				c->moves_b--;
+			}
+			while (c->moves_a-- > 0)
+				rotate(a, 'a');
+			while (c->moves_b-- > 0)
+				rotate(b, 'b');
+		}
+		else
+			execute_force_aux(c, a, b);
+	}
+	else
+		execute_normal_aux(c, a, b);
 }
