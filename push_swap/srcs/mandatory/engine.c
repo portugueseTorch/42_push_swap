@@ -6,7 +6,7 @@
 /*   By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:38:56 by gda_cruz          #+#    #+#             */
-/*   Updated: 2023/01/11 01:20:36 by gda_cruz         ###   ########.fr       */
+/*   Updated: 2023/01/11 01:41:56 by gda_cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	sort_stack(t_s **s, t_s **d, char src, char dst)
 		while (!sub_sorted(s) && stack_length(s) > 5)
 			push_stack(s, d, dst);
 		if (!sub_sorted(s))
-			sort_three(s, d, src, dst);
+			sort_five(s, d, src, dst);
 		sort_general(s, d, src, dst);
 	}
 }
